@@ -16,13 +16,13 @@ import logics.FieldGeneration;
 import logics.FieldOpening;
 
 public class Cell {
-	
+
 	private static int x = 0;
 	private static int y = 0;
 	private final int X;
 	private final int Y;
 	private JButton button = new JButton();
-	
+
 	public Cell(JPanel window, int x, int i, int j)
 	{
 		this.X = i;
@@ -40,105 +40,58 @@ public class Cell {
 			Cell.x = 0;
 		}
 		window.add(button, c);
-		
+		action();
+	}
+
+
+	private void action(){
 		ActionListener CellActionListener = new ActionListener()
+		{
+			@Override
+			public void actionPerformed(ActionEvent e)
+			{
+				String str =  Integer.toString(Start.field[X][Y]);
+				if("-1".equals(str))
 				{
-					@Override
-					public void actionPerformed(ActionEvent e) 
-					{
-//						for(int i = 0; i < Start.field.length; i +=1)
-//						{
-//							for(int j = 0; j < Start.field.length; j +=1)
-//							{
-//								if (Start.field[i][j] >= 10)
-//								{
-//									Start.fieldCell[i][j].setIcon();
-//									Start.fieldCell[i][j].setEnabled();
-//								}
-//								else
-//								{
-//									String str =  Integer.toString(Start.field[i][j]);
-//									Start.fieldCell[i][j].setText(str);
-//									Start.fieldCell[i][j].setEnabled();
-//								}
-//
-//							}
-//						}
-						String str =  Integer.toString(Start.field[X][Y]);
-						if("-1".equals(str))
-						{
-							new FieldGeneration(Start.field, X, Y);
-							for(int [] i: Start.field)				//
-							{									//
-								System.out.println();			//
-								for(int q: i)					//
-								{     							//
-					                System.out.print(q + ", ");	// Проверка
-								}							  	//
-							}		
-							new FieldOpening(X, Y, Start.field);
-							
-						}
-						else
-						{
-							new FieldOpening(X, Y, Start.field);
-						}
-//						new FieldOpening(X, Y, Start.field);
-//						button.setEnabled(false);
-//						int cell = Start.field[X][Y];
-//						if(cell >= 10)
-//						{
-//							button.setIcon(new ImageIcon("src/images/bombs2.png"));
-//						}
-//						else
-//						{
-//							String str =  Integer.toString(cell);
-//							button.setText(str);
-//						}
-						
-					}
-				};
-				
+					new FieldGeneration(Start.field, Start.maxBomb, X, Y);
+					FieldOpening.openCells(X, Y, Start.field);
+				}
+				else
+				{
+					FieldOpening.openCells(X, Y, Start.field);
+				}
+			}
+		};
 		button.addActionListener(CellActionListener);
 	}
-	
+	private void setIconBombs()
+	{
+		button.setIcon(new ImageIcon("images/bombs2.png"));
+		button.setDisabledIcon(new ImageIcon("images/bombs2.png"));
+	}
+
+	private void setIconNumber(int number)
+	{
+		button.setIcon(new ImageIcon(String.format("images/number-%s.png", number)));
+		button.setDisabledIcon(new ImageIcon(String.format("images/number-%s.png", number)));
+	}
+
 	public void setIcon()
-	{
-		button.setIcon(new ImageIcon("src/images/bombs2.png"));
-	}
-	
-	public void setText(String x)
-	{
-		if("0".equals(x))
-		{
-			
-		}
-		else
-		{
-			button.setText(x);
-		}
-	}
-	
-	public void setEnabled()
-	{
-		button.setEnabled(false);
-	}
-	
-	public void All()
 	{
 		if(button.isEnabled())
 		{
 			button.setEnabled(false);
 			String str =  Integer.toString(Start.field[X][Y]);
-			if(!("0".equals(str)))
+			if(!("0".equals(str)) & Start.field[X][Y] < 10)
 			{
-				button.setText(str);
+				setIconNumber(Start.field[X][Y]);
+			}else if(Start.field[X][Y] >= 10){
+				setIconBombs();
 			}
 		}
 	}
 	
-	public boolean isEnabled()
-	{
+	public boolean isEnabled()	{
 		return button.isEnabled();
 	}
 }
