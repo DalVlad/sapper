@@ -15,13 +15,15 @@ public class Start
 	
 	private static int x;
 	private static int y;
+	public static int maxBomb;
 	public static Cell[][] fieldCell;
 	public static int[][] field;
 	
-	public Start(int x, int y)
+	public Start(int x, int y, int maxBomb)
 	{
 		Start.x = x;
 		Start.y = y;
+		Start.maxBomb = maxBomb;
 		fieldCell = new Cell[x][y];
 		field = new int[x][y];
 		for(int i = 0; i < field.length; i++)

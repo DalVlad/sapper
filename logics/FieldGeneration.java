@@ -4,14 +4,14 @@ import java.util.Random;
 
 public class FieldGeneration 
 {
-	
-	public FieldGeneration(int field[][], int x, int y)
+
+	public FieldGeneration(int[][] field, int maxBombs, int x, int y)
 	{
-		bombsGeneration(field, x, y);
+		bombsGeneration(field, maxBombs, x, y);
 		numbersGeneration(field);
 	}
-	
-	private static void bombsGeneration(int field[][], int x0, int y0)
+
+	private static void bombsGeneration(int[][] field, int maxBombs, int x0, int y0)
 	{
 		for(int i = 0; i < field.length; i++)
 		{
@@ -25,27 +25,22 @@ public class FieldGeneration
 		int bombs = 0;
 		int length = field.length;
 		Random r = new Random();
-		while (bombs <= 15) // количество бомб
+		while (bombs <= maxBombs) // количество бомб
 		{
 			x = r.nextInt(length);
 			y = r.nextInt(length);
-			if (field[x][y] == 10 | (x0 == x & y0 == y) | (x0 + 1 == x & y0 + 1 == y) 
+			if (!(field[x][y] == 10 | (x0 == x & y0 == y) | (x0 + 1 == x & y0 + 1 == y)
 					| (x0 - 1 == x & y0 - 1 == y) | (x0 == x & y0 + 1 == y) | (x0 == x & y0 - 1 == y)
 					| (x0 + 1 == x & y0 == y) | (x0 - 1 == x & y0 == y) | (x0 + 1 == x & y0 - 1 == y)
-					| (x0 - 1 == x & y0 + 1 == y))
-			{
-				continue;
-			}
-			else
+					| (x0 - 1 == x & y0 + 1 == y)))
 			{
 				field[x][y] = 10;
 				bombs += 1;
 			}
-//			System.out.print("true");  // Проверка
 		}
 	}
 	
-	private static void numbersGeneration(int field[][])
+	private static void numbersGeneration(int[][] field)
 	{
 		int x = 0;
 		int y = 0;
@@ -59,55 +54,38 @@ public class FieldGeneration
 					try
 					{
 						field[x - 1][y - 1] += 1;
-					} catch (Exception e)
-					{
-					}
+					} catch (Exception ignored){}
 					try
 					{
 						field[x + 1][y + 1] += 1;
-					} catch (Exception e)
-					{
-					}
+					} catch (Exception ignored){}
 					try
 					{
 						field[x][y - 1] += 1;
-					} catch (Exception e)
-					{
-					}
+					} catch (Exception ignored){}
 					try
 					{
 						field[x][y + 1] += 1;
-					} catch (Exception e)
-					{
-					}
+					} catch (Exception ignored){}
 					try
 					{
 						field[x + 1][y] += 1;
-					} catch (Exception e)
-					{
-					}
+					} catch (Exception ignored){}
 					try
 					{
 						field[x - 1][y] += 1;
-					} catch (Exception e)
-					{
-					}
+					} catch (Exception ignored){}
 					try
 					{
 						field[x + 1][y - 1] += 1;
-					} catch (Exception e)
-					{
-					}
+					} catch (Exception ignored){}
 					try
 					{
 						field[x - 1][y + 1] += 1;
-					} catch (Exception e)
-					{
-					}
+					} catch (Exception ignored){}
 				}
 			}
 			
 		}
-//		System.out.print("true");
 	}
 }
