@@ -1,15 +1,10 @@
 package gi.buttons;
 
-import java.awt.Dimension;
-import java.awt.Font;
-import java.awt.GridBagConstraints;
-import java.awt.Insets;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JPanel;
+import javax.swing.*;
 
 import gi.Start;
 import logics.FieldGeneration;
@@ -21,10 +16,10 @@ public class Cell {
 	private static int y = 0;
 	private final int X;
 	private final int Y;
+
 	private JButton button = new JButton();
 
-	public Cell(JPanel window, int x, int i, int j)
-	{
+	public Cell(JPanel window, int x, int i, int j) {
 		this.X = i;
 		this.Y = j;
 		GridBagConstraints c = new GridBagConstraints();
@@ -34,8 +29,7 @@ public class Cell {
 		c.gridx = Cell.x;
 		c.gridy = Cell.y;
 		Cell.x += 1;
-		if(Cell.x == x)
-		{
+		if(Cell.x == x) {
 			Cell.y += 1;
 			Cell.x = 0;
 		}
@@ -43,21 +37,15 @@ public class Cell {
 		action();
 	}
 
-
 	private void action(){
-		ActionListener CellActionListener = new ActionListener()
-		{
+		ActionListener CellActionListener = new ActionListener() {
 			@Override
-			public void actionPerformed(ActionEvent e)
-			{
-				String str =  Integer.toString(Start.field[X][Y]);
-				if("-1".equals(str))
-				{
+			public void actionPerformed(ActionEvent e) {
+				if(Start.field[X][Y] == -1) {
 					new FieldGeneration(Start.field, Start.maxBomb, X, Y);
 					FieldOpening.openCells(X, Y, Start.field);
 				}
-				else
-				{
+				else {
 					FieldOpening.openCells(X, Y, Start.field);
 				}
 			}

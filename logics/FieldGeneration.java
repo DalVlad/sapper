@@ -13,12 +13,8 @@ public class FieldGeneration
 
 	private static void bombsGeneration(int[][] field, int maxBombs, int x0, int y0)
 	{
-		for(int i = 0; i < field.length; i++)
-		{
-			for(int j = 0; j < field.length; j++)
-			{
-				field[i][j] = 0;
-			}
+		for (int[] ints : field) {
+			Arrays.fill(ints, 0);
 		}
 		int x = 0;
 		int y = 0;
@@ -47,40 +43,30 @@ public class FieldGeneration
 		for(; x < field.length; x += 1)
 		{
 			y = 0;
-			for(; y < field.length; y += 1)
-			{
-				if (field[x][y] >= 10)
-				{
-					try
-					{
+			for(; y < field[0].length; y += 1) {
+				if (field[x][y] >= 10) {
+					try {
 						field[x - 1][y - 1] += 1;
 					} catch (Exception ignored){}
-					try
-					{
+					try {
 						field[x + 1][y + 1] += 1;
 					} catch (Exception ignored){}
-					try
-					{
+					try {
 						field[x][y - 1] += 1;
 					} catch (Exception ignored){}
-					try
-					{
+					try {
 						field[x][y + 1] += 1;
 					} catch (Exception ignored){}
-					try
-					{
+					try {
 						field[x + 1][y] += 1;
 					} catch (Exception ignored){}
-					try
-					{
+					try {
 						field[x - 1][y] += 1;
 					} catch (Exception ignored){}
-					try
-					{
+					try {
 						field[x + 1][y - 1] += 1;
 					} catch (Exception ignored){}
-					try
-					{
+					try {
 						field[x - 1][y + 1] += 1;
 					} catch (Exception ignored){}
 				}

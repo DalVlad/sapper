@@ -1,16 +1,16 @@
 package gi;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.GridBagLayout;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.Arrays;
 
-import javax.swing.JFrame;
-import javax.swing.JPanel;
+import javax.swing.*;
 
 import gi.buttons.*;
 
 
-public class Start 
+public class Start
 {
 	
 	private static int x;
@@ -26,12 +26,8 @@ public class Start
 		Start.maxBomb = maxBomb;
 		fieldCell = new Cell[x][y];
 		field = new int[x][y];
-		for(int i = 0; i < field.length; i++)
-		{
-			for(int j = 0; j < field.length; j++)
-			{
-				field[i][j] = -1;
-			}
+		for (int[] ints : field) {
+			Arrays.fill(ints, -1);
 		}
 		start();
 	}
