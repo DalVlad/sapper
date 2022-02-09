@@ -25,12 +25,13 @@ public class FieldGeneration
 		Random r = new Random();
 		while (bombs <= maxBombs) // количество бомб
 		{
-			x = r.nextInt(length);
-			y = r.nextInt(length);
-			if (!(field[x][y] == 10 | (x0 == x & y0 == y) | (x0 + 1 == x & y0 + 1 == y)
+			x = r.nextInt(lengthX);
+			y = r.nextInt(lengthY);
+			boolean isBombNear = field[x][y] == 10 | (x0 == x & y0 == y) | (x0 + 1 == x & y0 + 1 == y)
 					| (x0 - 1 == x & y0 - 1 == y) | (x0 == x & y0 + 1 == y) | (x0 == x & y0 - 1 == y)
 					| (x0 + 1 == x & y0 == y) | (x0 - 1 == x & y0 == y) | (x0 + 1 == x & y0 - 1 == y)
-					| (x0 - 1 == x & y0 + 1 == y)))
+					| (x0 - 1 == x & y0 + 1 == y);
+			if (!isBombNear)
 			{
 				field[x][y] = 10;
 				bombs += 1;
