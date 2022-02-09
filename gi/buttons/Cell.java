@@ -14,6 +14,7 @@ public class Cell {
 
 	private static int x = 0;
 	private static int y = 0;
+	private static int allOpenCell = 0;
 	private final int X;
 	private final int Y;
 
@@ -52,10 +53,37 @@ public class Cell {
 		};
 		button.addActionListener(CellActionListener);
 	}
-	private void setIconBombs()
+
+	private void loss()
 	{
-		button.setIcon(new ImageIcon("images/bombs2.png"));
-		button.setDisabledIcon(new ImageIcon("images/bombs2.png"));
+		for(Cell[] cell: Start.fieldCell){
+			for(Cell cell1: cell){
+				cell1.setIconBombs();
+			}
+		}
+		allOpenCell = 0;
+		Start.windowLoss();
+	}
+
+	private void win(){
+		for(Cell[] cell: Start.fieldCell){
+			for(Cell cell1: cell){
+				cell1.setIconBombs();
+			}
+		}
+		Start.windowWin();
+	}
+
+	private void setIconBombs(){
+		if(button.isEnabled()){
+			button.setEnabled(false);
+			button.setIcon(new ImageIcon("images/cell.png"));
+			button.setDisabledIcon(new ImageIcon("images/cell.png"));
+		}
+		if(Start.field[X][Y] >= 10){
+			button.setIcon(new ImageIcon("images/bomb.png"));
+			button.setDisabledIcon(new ImageIcon("images/bomb.png"));
+		}
 	}
 
 	private void setIconNumber(int number)
@@ -68,13 +96,18 @@ public class Cell {
 	{
 		if(button.isEnabled())
 		{
+			allOpenCell++;
 			button.setEnabled(false);
 			String str =  Integer.toString(Start.field[X][Y]);
 			if(!("0".equals(str)) & Start.field[X][Y] < 10)
 			{
 				setIconNumber(Start.field[X][Y]);
 			}else if(Start.field[X][Y] >= 10){
-				setIconBombs();
+				loss();
+			}
+			if(allOpenCell + 1 == ((Start.field.length * Start.field[0].length) - Start.maxBomb)){
+				allOpenCell = 0;
+				win();
 			}
 		}
 	}
