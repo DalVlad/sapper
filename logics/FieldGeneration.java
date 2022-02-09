@@ -1,5 +1,6 @@
 package logics;
 
+import java.util.Arrays;
 import java.util.Random;
 
 public class FieldGeneration 
@@ -19,7 +20,8 @@ public class FieldGeneration
 		int x = 0;
 		int y = 0;
 		int bombs = 0;
-		int length = field.length;
+		int lengthX = field.length;
+		int lengthY = field[0].length;
 		Random r = new Random();
 		while (bombs <= maxBombs) // количество бомб
 		{
