@@ -22,7 +22,10 @@ public class Start
 	public static int maxBomb;
 	public static Cell[][] fieldCell;
 	public static int[][] field;
-	
+
+	/**
+	 * Конструктор создает все необходимые окна
+	 */
 	public Start()
 	{
 		windowLossCreation();
@@ -30,6 +33,13 @@ public class Start
 		windowStartCreation();
 		windowStart.setVisible(true);
 	}
+
+	/**
+	 * Метод создает массив кнопок и массив чисел затем запускает метод "start"
+	 * @param x Высота игрового поля
+	 * @param y Ширина игрового поля
+	 * @param maxBomb Количество бомб
+	 */
 
 	private void settingPreferences(int x, int y, int maxBomb){
 		Start.x = x;
@@ -43,6 +53,9 @@ public class Start
 		start();
 	}
 
+	/**
+	 * Метод создает игровое окно с кнопоками и отображает его
+	 */
 	private static void start()
 	{
 		windowGame = new JFrame();
@@ -58,14 +71,17 @@ public class Start
 		windowGame.setVisible(true);
 	}
 
-	public static void windowLoss(){
+	public static void openWindowLoss(){
 		windowLoss.setVisible(true);
 	}
 
-	public static void windowWin(){
+	public static void openWindowWin(){
 		windowWin.setVisible(true);
 	}
 
+	/**
+	 * Метод создания стартового окна с выбором сложности
+	 */
 	private void windowStartCreation(){
 		windowStart = new JFrame();
 		windowStart.setTitle("Game difficulty");
@@ -113,6 +129,10 @@ public class Start
 		windowCreationCloseAndRestart(windowWin);
 	}
 
+	/**
+	 * Метод для создания окна с кнопками "Restart" и "Close"
+	 * @param window
+	 */
 	private void windowCreationCloseAndRestart(JFrame window){
 		JPanel panelCenter = Start.windowCreation(window);
 		JButton buttonClose = buttonCreation("Close");
@@ -145,6 +165,11 @@ public class Start
 		return button;
 	}
 
+	/**
+	 * Метод для создания всех окон для игры
+	 * @param window
+	 * @return Возвращает центральную панель окна
+	 */
 	public static JPanel windowCreation(JFrame window){
 		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		window.setLocationRelativeTo(null);

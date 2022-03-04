@@ -5,13 +5,26 @@ import java.util.Random;
 
 public class FieldGeneration 
 {
-
+	/**
+	 * Генерирует поле
+	 * @param field игровое поле
+	 * @param maxBombs количество бомб
+	 * @param x расположение нажатой кнопки по "x"
+	 * @param y расположение нажатой кнопки по "y"
+	 */
 	public FieldGeneration(int[][] field, int maxBombs, int x, int y)
 	{
 		bombsGeneration(field, maxBombs, x, y);
 		numbersGeneration(field);
 	}
 
+	/**
+	 * Генерирует бомбы.
+	 * @param field игровое поле
+	 * @param maxBombs количество бомб
+	 * @param x0 расположение нажатой кнопки по "x"
+	 * @param y0 расположение нажатой кнопки по "y"
+	 */
 	private static void bombsGeneration(int[][] field, int maxBombs, int x0, int y0)
 	{
 		for (int[] ints : field) {
@@ -23,7 +36,7 @@ public class FieldGeneration
 		int lengthX = field.length;
 		int lengthY = field[0].length;
 		Random r = new Random();
-		while (bombs <= maxBombs) // количество бомб
+		while (bombs <= maxBombs)
 		{
 			x = r.nextInt(lengthX);
 			y = r.nextInt(lengthY);
@@ -38,7 +51,11 @@ public class FieldGeneration
 			}
 		}
 	}
-	
+
+	/**
+	 * Генерирует числа количества бомб рядом
+	 * @param field игровое поле
+	 */
 	private static void numbersGeneration(int[][] field)
 	{
 		int x = 0;

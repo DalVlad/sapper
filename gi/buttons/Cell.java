@@ -20,7 +20,14 @@ public class Cell {
 
 	private JButton button = new JButton();
 
-	public Cell(JPanel window, int x, int i, int j) {
+	/**
+	 * Создает кнопку и располагает её на панеле
+	 * @param window Окно в котором будут распологаться кнопки
+	 * @param y Ширина поля
+	 * @param i Счетчик цикла. Используется для хранения расположения кнопки по координате "X"
+	 * @param j Счетчик цикла. Используется для хранения расположения кнопки по координате "Y"
+	 */
+	public Cell(JPanel window, int y, int i, int j) {
 		this.X = i;
 		this.Y = j;
 		GridBagConstraints c = new GridBagConstraints();
@@ -30,7 +37,7 @@ public class Cell {
 		c.gridx = Cell.x;
 		c.gridy = Cell.y;
 		Cell.x += 1;
-		if(Cell.x == x) {
+		if(Cell.x == y) {
 			Cell.y += 1;
 			Cell.x = 0;
 		}
@@ -38,6 +45,9 @@ public class Cell {
 		action();
 	}
 
+	/**
+	 * Метод создает обработчик при нажатии на кнопку
+	 */
 	private void action(){
 		ActionListener CellActionListener = new ActionListener() {
 			@Override
@@ -54,27 +64,35 @@ public class Cell {
 		button.addActionListener(CellActionListener);
 	}
 
+	/**
+	 * Метод запускается при проигрыше
+	 */
 	private void loss()
 	{
 		for(Cell[] cell: Start.fieldCell){
 			for(Cell cell1: cell){
-				cell1.setIconBombs();
+				cell1.setAllIcon();
 			}
 		}
 		allOpenCell = 0;
-		Start.windowLoss();
+		Start.openWindowLoss();
 	}
-
+	/**
+	 * Метод запускается при выигрыше
+	 */
 	private void win(){
 		for(Cell[] cell: Start.fieldCell){
 			for(Cell cell1: cell){
-				cell1.setIconBombs();
+				cell1.setAllIcon();
 			}
 		}
-		Start.windowWin();
+		Start.openWindowWin();
 	}
 
-	private void setIconBombs(){
+	/**
+	 * Метод устанавливает все иконки на поле
+	 */
+	private void setAllIcon(){
 		if(button.isEnabled()){
 			button.setEnabled(false);
 			button.setIcon(new ImageIcon("images/cell.png"));
@@ -86,12 +104,20 @@ public class Cell {
 		}
 	}
 
+	/**
+	 * Метод показывающий количество бомб рядом
+	 * @param number Количество бомб поблизости
+	 */
 	private void setIconNumber(int number)
 	{
 		button.setIcon(new ImageIcon(String.format("images/number-%s.png", number)));
 		button.setDisabledIcon(new ImageIcon(String.format("images/number-%s.png", number)));
 	}
 
+	/**
+	 * Метод определяющий какую иконку установить.
+	 * Также запускает методы проигрыша "loss" и выигрыша "win"
+	 */
 	public void setIcon()
 	{
 		if(button.isEnabled())
@@ -111,7 +137,10 @@ public class Cell {
 			}
 		}
 	}
-	
+
+	/**
+	 * Определяет влюченна кнопка или нет
+	 */
 	public boolean isEnabled()	{
 		return button.isEnabled();
 	}

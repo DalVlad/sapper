@@ -3,7 +3,12 @@ package logics;
 import gi.Start;
 
 public class FieldOpening {
-	
+	/**
+	 * Метод открывающий поле
+	 * @param x расположение кнопки по "x"
+	 * @param y расположение кнопки по "y"
+	 * @param field игровое поле
+	 */
 	public static void openCells(int x, int y, int[][] field)
 	{
 		if(Start.fieldCell[x][y].isEnabled()){
