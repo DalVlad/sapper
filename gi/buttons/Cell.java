@@ -9,9 +9,11 @@ import javax.swing.*;
 import gi.Start;
 import logics.FieldGeneration;
 import logics.FieldOpening;
+import stats.Statistics;
 
 public class Cell {
 
+	public static int difficultyLevel;
 	private static int x = 0;
 	private static int y = 0;
 	private static int allOpenCell = 0;
@@ -67,7 +69,7 @@ public class Cell {
 	/**
 	 * Метод запускается при проигрыше
 	 */
-	private void loss()
+	private static void loss()
 	{
 		for(Cell[] cell: Start.fieldCell){
 			for(Cell cell1: cell){
@@ -77,10 +79,11 @@ public class Cell {
 		allOpenCell = 0;
 		Start.openWindowLoss();
 	}
+
 	/**
 	 * Метод запускается при выигрыше
 	 */
-	private void win(){
+	private static void win(){
 		for(Cell[] cell: Start.fieldCell){
 			for(Cell cell1: cell){
 				cell1.setAllIcon();
@@ -129,9 +132,11 @@ public class Cell {
 			{
 				setIconNumber(Start.field[X][Y]);
 			}else if(Start.field[X][Y] >= 10){
+				Statistics.writeStatistic(difficultyLevel, 0, allOpenCell);
 				loss();
 			}
 			if(allOpenCell + 1 == ((Start.field.length * Start.field[0].length) - Start.maxBomb)){
+				Statistics.writeStatistic(difficultyLevel, 1, allOpenCell);
 				allOpenCell = 0;
 				win();
 			}

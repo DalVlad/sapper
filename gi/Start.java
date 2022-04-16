@@ -3,12 +3,14 @@ package gi;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import javax.swing.*;
 
 import gi.buttons.*;
-
+import stats.Statistics;
 
 public class Start
 {
@@ -19,6 +21,7 @@ public class Start
 	private static JFrame windowLoss = null;
 	private static JFrame windowWin = null;
 	private static JFrame windowStart = null;
+	private static JFrame windowStatistics = null;
 	public static int maxBomb;
 	public static Cell[][] fieldCell;
 	public static int[][] field;
@@ -31,6 +34,7 @@ public class Start
 		windowLossCreation();
 		windowWinCreation();
 		windowStartCreation();
+		windowStatisticsCreation();
 		windowStart.setVisible(true);
 	}
 
@@ -40,7 +44,6 @@ public class Start
 	 * @param y Ширина игрового поля
 	 * @param maxBomb Количество бомб
 	 */
-
 	private void settingPreferences(int x, int y, int maxBomb){
 		Start.x = x;
 		Start.y = y;
@@ -66,6 +69,13 @@ public class Start
 		{
 			fieldCell[i][j] = new Cell(panelCenter, Start.y, i, j);
 		}
+		if(Start.maxBomb == 10){
+			Cell.difficultyLevel = 0;
+		}else if(Start.maxBomb == 40){
+			Cell.difficultyLevel = 1;
+		}else {
+			Cell.difficultyLevel = 2;
+		}
 		windowGame.pack();
 		windowGame.setResizable(false);
 		windowGame.setVisible(true);
@@ -89,6 +99,7 @@ public class Start
 		JButton buttonSimple = buttonCreation("Simple");
 		JButton buttonAverage = buttonCreation("Average");
 		JButton buttonExpert = buttonCreation("Expert");
+		JButton buttonStatistics = buttonCreation("Statistics");
 		buttonSimple.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -110,9 +121,18 @@ public class Start
 				settingPreferences(30, 16, 99);
 			}
 		});
+		buttonStatistics.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				windowStart.setVisible(false);
+				windowStatisticsCreation();
+				windowStatistics.setVisible(true);
+			}
+		});
 		panelCenter.add(buttonSimple);
 		panelCenter.add(buttonAverage);
 		panelCenter.add(buttonExpert);
+		panelCenter.add(buttonStatistics);
 		windowStart.pack();
 		windowStart.setResizable(false);
 	}
@@ -156,6 +176,47 @@ public class Start
 		panelCenter.add(buttonRestart);
 		window.pack();
 		window.setResizable(false);
+	}
+
+	private void windowStatisticsCreation(){
+		windowStatistics = new JFrame();
+		JPanel panelCenter = windowCreation(windowStatistics);
+		panelCenter.setBackground(Color.WHITE);
+		windowStatistics.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+		collectStatistics(panelCenter);
+		windowStatistics.pack();
+		windowStatistics.setResizable(false);
+	}
+
+	/**
+	 * Сбор статистики и размещение её на панеле
+	 * @param panelCenter Панель на которой будет размещаться статистика
+	 */
+	private void collectStatistics(JPanel panelCenter){
+		int[] statistics = Statistics.getStatisticSAEA();
+		List<JComponent> component = new ArrayList<JComponent>();
+		Font font = new Font(null, Font.PLAIN, 20);
+		component.add(new JLabel("Win Simple = " + statistics[0]));
+		component.add(new JLabel("Win Average = " + statistics[1]));
+		component.add(new JLabel("Win Expert = " + statistics[2]));
+		component.add(new JLabel("Total open cells = " + statistics[3]));
+		component.add(buttonCreation("Back"));
+		GridBagConstraints c = new GridBagConstraints();
+		c.gridx = 0;
+		c.gridy = 0;
+		for(int i = 0; i < component.size() - 1; i++, c.gridy += 1){
+			component.get(i).setFont(font);
+			panelCenter.add(component.get(i), c);
+		}
+		((JButton)component.get(component.size() - 1)).addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				windowStart.setVisible(true);
+				windowStatistics.setVisible(false);
+				windowStatistics.removeAll();
+			}
+		});
+		panelCenter.add(component.get(component.size() - 1), c);
 	}
 
 	private static JButton buttonCreation(String text){
